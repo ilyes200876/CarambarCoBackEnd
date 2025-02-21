@@ -1,9 +1,25 @@
-const http = require('http');
+
+const express = require('express');
+const server = express();
+const bodyParser = require('body-parser');
+const db = require('./models');
 
 
-const server = http.createServer((req, res) => {
-    res.end("voila la réponse du premier serveur !");
+const { sequelize } = require('./models');
+const jokeRoutes = require('./routes/JokeRoutes')
 
-});
+server.use(bodyParser.json());
+server.use('/', jokeRoutes);
 
-server.listen(process.env.PORT ||3000);
+
+db.sequelize.sync({ force: false })
+    .then(() => {
+        console.log("la base de donnée est synchronisée");
+        server.listen(3000, () => console.log("Le serveur fonctionne."));
+    })
+    .catch(err => console.error('Echec de synchronisation de la BDD'));
+
+
+
+
+
