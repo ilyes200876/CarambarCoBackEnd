@@ -21,6 +21,17 @@ const getRandomJoke = async(req, res) => {
 
 };
 
+const getJokeById = async(req, res) => {
+    try{
+        const id = req.params.id;
+        const jokeId = await Joke.findByPk(id);
+        res.json(jokeId);
+
+    }catch (error) {
+        res.status(400).json({error: "Cette blague est introuvable"});
+    }
+};
+
 const createJoke = async(req, res) => {
     try {
         const {question, response} = req.body;
@@ -32,4 +43,4 @@ const createJoke = async(req, res) => {
     };
 };
 
-module.exports = {getAllJokes, getRandomJoke, createJoke};
+module.exports = {getAllJokes, getRandomJoke, getJokeById ,createJoke};
