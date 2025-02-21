@@ -1,5 +1,7 @@
 
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 const server = express();
 const bodyParser = require('body-parser');
 const db = require('./models');
@@ -7,6 +9,27 @@ const db = require('./models');
 
 const { sequelize } = require('./models');
 const jokeRoutes = require('./routes/JokeRoutes')
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        myapi: '3.0.0',
+        info: {
+        title: 'JOKE API',
+        version: '1.0.0',
+        description: 'API de blagues',
+        },
+        servers: [
+            {
+            url: 'http://localhost:3000',
+            },
+        ],
+    },
+    apis: ['./routes/*.js'],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 server.use(bodyParser.json());
 server.use('/', jokeRoutes);

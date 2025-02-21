@@ -25,6 +25,9 @@ const getJokeById = async(req, res) => {
     try{
         const id = req.params.id;
         const jokeId = await Joke.findByPk(id);
+        if(!jokeId){
+            res.sendStatus(404);
+        }else
         res.json(jokeId);
 
     }catch (error) {
