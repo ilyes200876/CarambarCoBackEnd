@@ -5,9 +5,10 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const server = express();
 const bodyParser = require('body-parser');
 const db = require('./models');
+const cors = require('cors');
 
 
-const { sequelize } = require('./models');
+// const { sequelize } = require('./models');
 const jokeRoutes = require('./routes/JokeRoutes')
 
 const swaggerOptions = {
@@ -30,7 +31,11 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-
+server.use(cors({
+    origin: "http://localhost:4200",
+    methods: ["GET","POST"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 server.use(bodyParser.json());
 server.use('/', jokeRoutes);
 
