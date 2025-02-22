@@ -68,7 +68,7 @@ router.route('/blagues')
 
 /**
  * @swagger
- * /blague/random:
+ * /blagues/random:
  *     get:
  *         summary: "Affiche une blague au hasard"
  *         description: "Cette route permet d'afficher une blague aléatoire"
@@ -90,7 +90,7 @@ router.route('/blagues')
  *                                     type: string
  *                                     description: "La réponse de la blague"
  */
-    router.route('/blague/random')
+    router.route('/blagues/random')
     .get(jokeController.getRandomJoke);
 
 
