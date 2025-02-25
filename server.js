@@ -33,7 +33,7 @@ server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 server.use(cors({
     origin: "http://localhost:4200",
-    methods: ["GET","POST"],
+    methods: ["GET","POST","DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
 server.use(bodyParser.json());
