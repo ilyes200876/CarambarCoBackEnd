@@ -129,6 +129,25 @@ router.route('/blagues')
     .get(jokeController.getJokeById);
 
 
+/**
+ * @swagger
+ * /blagues/delete/{id}:
+ *     delete:
+ *         summary: "Effacer une blague spécifique"
+ *         description: "Cette route permet d'effacer une blague à partir de son ID"
+ *         parameters:
+ *           - name: id
+ *             in: path
+ *             required: true
+ *             description: "L'ID de la blague à récupérer"
+ *             schema:
+ *                 type: integer
+ *         responses:
+ *             200:
+ *                 description: "Joke deleted"   
+ *             400:
+ *                 description: "Joke not found"
+ */
     router.route('/blagues/delete/:id')
     .delete(jokeController.deleteJoke);
 

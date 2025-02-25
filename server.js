@@ -13,7 +13,7 @@ const jokeRoutes = require('./routes/JokeRoutes')
 
 const swaggerOptions = {
     swaggerDefinition: {
-        myapi: '3.0.0',
+        openapi: '3.0.0',
         info: {
         title: 'JOKE API',
         version: '1.0.0',
