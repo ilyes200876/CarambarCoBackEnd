@@ -26,7 +26,7 @@ const getJokeById = async(req, res) => {
         const id = req.params.id;
         const jokeId = await Joke.findByPk(id);
         if(!jokeId){
-            res.sendStatus(404);
+            return res.sendStatus(404);
         }else
         res.json(jokeId);
 
@@ -38,11 +38,14 @@ const getJokeById = async(req, res) => {
 const createJoke = async(req, res) => {
     try {
         const {question, response} = req.body;
-    const joke = await Joke.create({question, response});
-    res.status(201).json(joke);
+        if (!question || !response){
+            return res.status(400).json({error: "Impossible de créer la blague"});
+        }
+        const joke = await Joke.create({question, response});
+        res.status(201).json(joke);
     }catch (error) {
         console.error(error);
-        res.status(400).json({error: "Erreur lors de la création de la blague"});
+        res.status(500).json({error: "Erreur lors de la création de la blague"});
     };
 };
 
@@ -51,7 +54,7 @@ const deleteJoke = async(req,res) => {
         const id = req.params.id;
         const jokeId = await Joke.findByPk(id);
         if(!jokeId) {
-            res.status(400).json({error: "cette blague est introuvable."})
+            return res.status(400).json({error: "cette blague est introuvable."})
         }
         await jokeId.destroy();
         res.status(200).json({message: "Blague supprimée."});
