@@ -46,4 +46,18 @@ const createJoke = async(req, res) => {
     };
 };
 
-module.exports = {getAllJokes, getRandomJoke, getJokeById ,createJoke};
+const deleteJoke = async(req,res) => {
+    try {
+        const id = req.params.id;
+        const jokeId = await Joke.findByPk(id);
+        if(!jokeId) {
+            res.status(400).json({error: "cette blague est introuvable."})
+        }
+        await jokeId.destroy();
+        res.status(200).json({message: "Blague supprimée."});
+    }catch (error) {
+        res.status(500).json({error: "Impossible de supprimer"});
+    }
+}
+
+module.exports = {getAllJokes, getRandomJoke, getJokeById ,createJoke,deleteJoke};
