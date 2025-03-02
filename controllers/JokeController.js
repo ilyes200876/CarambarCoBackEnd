@@ -49,10 +49,31 @@ const createJoke = async(req, res) => {
     };
 };
 
+const updateJoke = async(req, res) => {
+    try {
+        const {question, response} = req.body;
+        const id = req.params.id;
+        const jokeId = await Joke.findByPk(id);
+        if(!jokeId) {
+            return res.status(400).json({error: "La blague est introuvable"});
+        }
+        jokeId.question = question;
+        jokeId.response = response ;
+        await jokeId.save();
+        if (!jokeId.question || !jokeId.response) {
+            return res.status(400).json({ error: "La mise à jour a échoué, aucun champ ne peut être vide." });
+        }
+        res.status(200).json(jokeId)
+    } catch(error){
+        res.status(500).json({error: "Erreur lors de l'update de la blague"});
+    }
+};
+
 const deleteJoke = async(req,res) => {
     try {
         const id = req.params.id;
         const jokeId = await Joke.findByPk(id);
+        console.log(jokeId);
         if(!jokeId) {
             return res.status(400).json({error: "cette blague est introuvable."})
         }
@@ -63,4 +84,4 @@ const deleteJoke = async(req,res) => {
     }
 }
 
-module.exports = {getAllJokes, getRandomJoke, getJokeById ,createJoke,deleteJoke};
+module.exports = {getAllJokes, getRandomJoke, getJokeById ,createJoke,updateJoke ,deleteJoke};

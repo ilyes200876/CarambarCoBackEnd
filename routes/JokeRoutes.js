@@ -128,6 +128,9 @@ router.route('/blagues')
     router.route('/blagues/:id')
     .get(jokeController.getJokeById);
 
+router.route('/blagues/update/:id')
+.put(jokeController.updateJoke);
+
 
 /**
  * @swagger
