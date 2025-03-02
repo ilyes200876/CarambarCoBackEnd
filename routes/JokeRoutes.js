@@ -128,8 +128,43 @@ router.route('/blagues')
     router.route('/blagues/:id')
     .get(jokeController.getJokeById);
 
-router.route('/blagues/update/:id')
-.put(jokeController.updateJoke);
+/**
+ * @swagger
+ * /blagues/update/{id}:
+ *     put:
+ *         summary: "mettre à jour une blague"
+ *         description: "Cztte route permet de mettre à jour une certaine blague"   
+ *         parameters:
+ *             - name: id
+ *               in: path
+ *               required: true
+ *               description: "L'ID de la blague à récupérer"
+ *               schema:
+ *                   type: integer 
+ *         requestBody:
+ *             required: true
+ *             content:
+ *                 application/json:
+ *                     schema:
+ *                         type: object
+ *                         required:
+ *                             - question
+ *                             - response
+ *                         properties:
+ *                             question:
+ *                                 type: string
+ *                                 description: "La question de la blague"
+ *                             response:
+ *                                 type: string
+ *                                 description: "La réponse à la blague"
+ *         responses:
+ *             201:
+ *                 description: "Blague créée avec succès"
+ *             400:
+ *                 description: "Erreur de validation"          
+ */
+    router.route('/blagues/update/:id')
+    .put(jokeController.updateJoke);
 
 
 /**
